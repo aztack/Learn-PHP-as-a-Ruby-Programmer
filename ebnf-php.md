@@ -78,3 +78,66 @@ statement = "{" inner_statement_list "}"
 	| "try" "{" inner_statement_list "}" catch_branch {catch_branch}
 	| "throw" expr ";" ;
 ```
+
+其他语言结构
+============
+
+```
+expr_without_variable = "list" "(" assignment_list ")" "=" expr
+	...
+	| "(int)" expr
+	| "(double)" expr
+	| "(float)" expr
+	| "(real)" expr
+	| "(string)" expr
+	| "(array)" expr
+	| "(object)" expr
+	| "(bool)" expr
+	| "(boolean)" expr
+	| "(unset)" expr # FIXME: not implemented
+	| "exit" [exit_expr]
+	| "die" [exit_expr]
+	...
+	| "array" "(" [array_pair_list] ")"
+	| "print" expr ;
+```
+
+`list`可以实现`并行赋值`
+
+```php
+list($drink, $color, $power) = array('coffee', 'brown', 'caffeine');
+```
+`array`构造一个数组。
+这两个结构都需要加上括号（伪装成函数调用）。
+这个地方就是PHP设计上不一致的地方。`echo`就不能加括号，`list`就需要。
+
+Internal Function
+=================
+
+```
+internal_functions = "isset" "(" variable {"," variable} ")"
+	| "empty" "(" variable ")"
+	| "include" expr
+	| "include_once" expr
+	| "eval" "(" expr ")"
+	| "require" expr
+	| "require_once" expr ;
+```
+
+
+变量
+====
+```
+T_STRING = LABEL;
+
+LABEL = (letter | "_") {letter | digit | "_"} ;
+
+T_VARIABLE = "$" T_STRING ;
+```
+
+函数
+====
+```
+function_declaration_statement = "function" ["&"] T_STRING
+	"(" parameter_list ")" "{" inner_statement_list "}" ;
+```
