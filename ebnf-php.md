@@ -1,4 +1,5 @@
 [EBNF of PHP](http://www.icosaedro.it/articoli/php-syntax-ebnf.txt)
+[zend_language_parser.y](https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y)
 
 脚本内嵌数据
 ============
